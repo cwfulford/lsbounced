@@ -1,0 +1,118 @@
+.TH LSBOUNCED 8l "28th April 2015 r1.46
+.SH NAME
+.B lsbounced
+- lists the original addressees of returned e-mail.
+.SH SYNOPSIS
+\fBlsbounced\fR
+[[\fB-c \fI<cc_addr>\fR]
+[\fB-d\fR]
+[\fB-L \fI<mail_box_directory>\fR]
+[\fB-l \fR]
+[\fB-r \fI<e-mail_recipient>\fR]
+[\fB-s \fR]
+[\fB-v \fR]
+[\fB-x \fI<xclude_addr>\fR]
+\fI<mailbox>\fR] |
+[\fB-V \fR]
+.br
+.SH AVAILABILITY
+.B lsbounced
+is a Bourne shell script which should work equally well on all versions of UNIX,
+Linux and Mac OS X.
+.SH DESCRIPTION
+.LP
+This utility was written for a company which was receiving a substantial amount of
+bounced email after each mailout to it's clienT list.
+.LP
+.B lsbounced
+uses "\fBssh\fR"
+to connect to an IMAP server and collects the addresses found in the nominated
+mailbox using the local the file system. (NB. It is not possible to just use the
+"From:" address as this is usually the recipient mail hosts "postmaster".) 
+.LP
+The addresses are cleaned up using
+"\fBsed\fR" and turned into a sorted list of unique addresses.
+The utility optionally formats the list using "\fBgroff\fR" and "\fBghostview\fR"
+to produce a "pdf" file which can be presented on screen and e-mailed  to
+specified recipients.
+.SH OPTIONS
+.TP 5
+\fB-c \fI<cc_mail_address>\fR
+The 
+.B -c
+option is used to add 
+.I cc
+ addresses to which a copies of the report sent with the
+.B -r
+option should be sent. This may be a single address or a comma separated list.
+The option is only relevant when the 
+.B -r option is also used. 
+.TP 5
+.B -d
+Set debug mode on. 
+The \fB-x\fR option is set within the shell
+and each command in the script is echoed to the console.
+.TP 5
+\fB-L \fI<directory>\fR
+The directory under which the mail messages are stored. 
+"\fBlsbounced\fR" expects that the "\fBCourier\fR" imap server is being used with
+virtual mailboxes and that each message is in a separate file.
+.TP 5
+.B -l
+Use the local syslog facility to log that 
+.B lsbounced
+has been run and record the number of messages found and the number of unique address
+extracted.
+.TP 5
+\fB-r \fI<recipient_addr>\fR
+Send out the list with a covering letter to  the \fI<recipient_addr>\fR.
+.TP 5
+\fB-s\fR
+Use "\fBgv\fR" to show the list on screen in pdf format.
+.TP 5
+.B -v
+Set verbose mode on. (Frankly verbose is somewhat of an exageration).
+.TP 5
+.I <mailbox>
+The mail account to be examined.
+.TP 5
+.B -V
+Print the version details and exit.
+.SH FILES
+.I /var/qmail/mailnames/<mail_domain>/<virtual_user_name>/Maildir/{cur,new}
+.SH EXAMPLES
+.IP
+.ft CW
+lsbounced -s -r fulford@fulford.net -L /var/qmail/mailnames bounced.westbridgford.ingo
+.ft R
+.LP
+Use 
+.B ssh
+to access 
+.IR mailserver.neg.uk .
+Count then number of message file in the directories
+ /var/qmail/mailnames/westbridgford.info/Maildir/{cur,new}.
+Pass the messages through
+.B awk
+and
+.B sed
+filters to extract the original mail addresses to which the bounced messages were
+sent.
+.LP
+Use
+.B groff
+and 
+.B ps2pdf
+to format the results and present a pdf file to screen. Send a copy of the report
+to 
+.IR fulford@fulford.net .
+.SH BUGS
+The script is quite crude and has very little, if any,  error checking.
+The consequences of unexpected input are untested.
+.SH SEE ALSO
+.IR chkmail ,
+.IR msg_cnt ,
+.IR msg_del .
+.SH AUTHOR
+Clifford W Fulford, City Linux. Contact fulford@fulford.net or +44 (0)709 229 5385.
+.SH HISTORY

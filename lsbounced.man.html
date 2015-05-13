@@ -1,0 +1,265 @@
+
+<p><a href="#heading1">NAME</a><br/>
+<a href="#heading2">SYNOPSIS</a><br/>
+<a href="#heading3">AVAILABILITY</a><br/>
+<a href="#heading4">DESCRIPTION</a><br/>
+<a href="#heading5">OPTIONS</a><br/>
+<a href="#heading6">FILES</a><br/>
+<a href="#heading7">EXAMPLES</a><br/>
+<a href="#heading8">BUGS</a><br/>
+<a href="#heading9">SEE ALSO</a><br/>
+<a href="#heading10">AUTHOR</a><br/>
+<a href="#heading11">HISTORY</a><br/>
+
+</p>
+<hr/>
+
+
+<h2 id="heading1">NAME
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b><a href="./scripts.php?script=lsbounced">lsbounced</a></b>
+- lists the original addressees of returned e-mail.</p>
+
+<h2 id="heading2">SYNOPSIS
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b><a href="./scripts.php?script=lsbounced">lsbounced</a></b>
+[[<b>-c</b> <i>&lt;cc_addr&gt;</i>] [<b>-d</b>] [<b>-L</b>
+<i>&lt;mail_box_directory&gt;</i>] [<b>-l</b> ] [<b>-r</b>
+<i>&lt;e-mail_recipient&gt;</i>] [<b>-s</b> ] [<b>-v</b> ]
+[<b>-x</b> <i>&lt;xclude_addr&gt;</i>]
+<i>&lt;mailbox&gt;</i>] | [<b>-V</b> ]</p>
+
+<h2 id="heading3">AVAILABILITY
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b><a href="./scripts.php?script=lsbounced">lsbounced</a></b>
+is a Bourne shell script which should work equally well on
+all versions of UNIX, Linux and Mac OS X.</p>
+
+<h2 id="heading4">DESCRIPTION
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">This utility
+was written for a company which was receiving a substantial
+amount of bounced email after each mailout to it&rsquo;s
+clienT list.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b><a href="./scripts.php?script=lsbounced">lsbounced</a></b>
+uses &quot;<b>ssh</b>&quot; to connect to an IMAP server and
+collects the addresses found in the nominated mailbox using
+the local the file system. (NB. It is not possible to just
+use the &quot;From:&quot; address as this is usually the
+recipient mail hosts &quot;postmaster&quot;.)</p>
+
+<p style="margin-left:11%; margin-top: 1em">The addresses
+are cleaned up using &quot;<b>sed</b>&quot; and turned into
+a sorted list of unique addresses. The utility optionally
+formats the list using &quot;<b>groff</b>&quot; and
+&quot;<b>ghostview</b>&quot; to produce a &quot;pdf&quot;
+file which can be presented on screen and e-mailed to
+specified recipients.</p>
+
+<h2 id="heading5">OPTIONS
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>-c</b>
+<i>&lt;cc_mail_address&gt;</i></p>
+
+<p style="margin-left:18%;">The <b>-c</b> option is used to
+add <i>cc</i> <br/>
+addresses to which a copies of the report sent with the
+<b>-r</b> option should be sent. This may be a single
+address or a comma separated list. The option is only
+relevant when the <b>-r option is also used.</b></p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<colgroup><col width="11%"></col>
+<col width="3%"></col>
+<col width="4%" class="center"></col>
+<col width="82%"></col>
+</colgroup>
+<tr valign="top" align="left">
+<td></td>
+<td>
+
+
+<p><b>-d</b></p></td>
+<td></td>
+<td>
+
+
+<p>Set debug mode on. The <b>-x</b> option is set within
+the shell and each command in the script is echoed to the
+console.</p> </td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>-L</b>
+<i>&lt;directory&gt;</i></p>
+
+<p style="margin-left:18%;">The directory under which the
+mail messages are stored. &quot;<b><a href="./scripts.php?script=lsbounced">lsbounced</a></b>&quot;
+expects that the &quot;<b>Courier</b>&quot; imap server is
+being used with virtual mailboxes and that each message is
+in a separate file.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<colgroup><col width="11%"></col>
+<col width="3%"></col>
+<col width="4%" class="center"></col>
+<col width="82%"></col>
+</colgroup>
+<tr valign="top" align="left">
+<td></td>
+<td>
+
+
+<p><b>-l</b></p></td>
+<td></td>
+<td>
+
+
+<p>Use the local syslog facility to log that
+<b><a href="./scripts.php?script=lsbounced">lsbounced</a></b> has been run and record the number of
+messages found and the number of unique address
+extracted.</p> </td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>-r</b>
+<i>&lt;recipient_addr&gt;</i></p>
+
+<p style="margin-left:18%;">Send out the list with a
+covering letter to the <i>&lt;recipient_addr&gt;</i>.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<colgroup><col width="11%"></col>
+<col width="3%"></col>
+<col width="4%" class="center"></col>
+<col width="82%"></col>
+</colgroup>
+<tr valign="top" align="left">
+<td></td>
+<td>
+
+
+<p><b>-s</b></p></td>
+<td></td>
+<td>
+
+
+<p>Use &quot;<b>gv</b>&quot; to show the list on screen in
+pdf format.</p></td></tr>
+<tr valign="top" align="left">
+<td></td>
+<td>
+
+
+<p><b>-v</b></p></td>
+<td></td>
+<td>
+
+
+<p>Set verbose mode on. (Frankly verbose is somewhat of an
+exageration).</p> </td></tr>
+</table>
+
+<p style="margin-left:11%;"><i>&lt;mailbox&gt;</i></p>
+
+<p style="margin-left:18%;">The mail account to be
+examined.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<colgroup><col width="11%"></col>
+<col width="3%"></col>
+<col width="4%" class="center"></col>
+<col width="54%"></col>
+<col width="28%"></col>
+</colgroup>
+<tr valign="top" align="left">
+<td></td>
+<td>
+
+
+<p><b>-V</b></p></td>
+<td></td>
+<td>
+
+
+<p>Print the version details and exit.</p></td>
+<td>
+</td></tr>
+</table>
+
+<h2 id="heading6">FILES
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>/var/qmail/mailnames/&lt;mail_domain&gt;/&lt;virtual_user_name&gt;/Maildir/{cur,new}</i></p>
+
+<h2 id="heading7">EXAMPLES
+</h2>
+
+
+
+<p style="margin-left:22%; margin-top: 1em"><i><tt><a href="./scripts.php?script=lsbounced">lsbounced</a>
+-s -r <a href="mailto:fulford@fulford.net" title="Send mail to Clifford W Fulford">fulford@fulford.net</a> -L /var/qmail/mailnames
+bounced.westbridgford.ingo</tt></i></p>
+
+<p style="margin-left:11%; margin-top: 1em">Use <b>ssh</b>
+to access <i>mailserver.neg.uk</i>. Count then number of
+message file in the directories <br/>
+/var/qmail/mailnames/westbridgford.info/Maildir/{cur,new}.
+Pass the messages through <b>awk</b> and <b>sed</b> filters
+to extract the original mail addresses to which the bounced
+messages were sent.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Use
+<b>groff</b> and <b>ps2pdf</b> to format the results and
+present a pdf file to screen. Send a copy of the report to
+<i><a href="mailto:fulford@fulford.net" title="Send mail to Clifford W Fulford">fulford@fulford.net</a></i>.</p>
+
+<h2 id="heading8">BUGS
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The script is
+quite crude and has very little, if any, error checking. The
+consequences of unexpected input are untested.</p>
+
+<h2 id="heading9">SEE ALSO
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><a href="./scripts.php?script=chkmail&amp;man=y">chkmail</a>,
+<i><a href="./scripts.php?script=msg_cnt">msg_cnt</a></i>, <i><a href="./scripts.php?script=msg_del">msg_del</a></i>.</p>
+
+<h2 id="heading10">AUTHOR
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Clifford W
+Fulford, <a href="http://www.citylinux.com"
+title="Go to the City Linux homepage">
+City Linux
+</a>. Contact <a href="mailto:fulford@fulford.net" title="Send mail to Clifford W Fulford">fulford@fulford.net</a> or +44
+(0)709 229 5385.</p>
+
+<h2 id="heading11">HISTORY
+</h2>
+<hr/>
